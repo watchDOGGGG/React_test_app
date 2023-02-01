@@ -5,7 +5,7 @@ import image5 from '../assets/5.png'
 export default function Footer() {
   return (
     <div className="bg-black p-[60px] text-white w-full text-sm">
-      <div className="flex flex-row justify-around w-full">
+      <div className="flex flex-row justify-around w-full border-t border-white p-5">
         <div className="w-[20%]">
           <h2>Logo</h2>
         </div>

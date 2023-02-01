@@ -14,16 +14,16 @@ export default function Dashboard() {
                     <div className="flex flex-row justify-center mt-[100px] mb-[104px]">
                         <img src={image6} />
                     </div>
-                    <h2 className="text-center text-[59px] font-[800]">Bringing the farmers and Customers into one picture</h2>
-                    <p className='text-center text-[#25313C]'>
+                    <h2 className="text-center text-[59px] font-[800] leading-[72px]">Bringing the <span className="text-[#0EB770]">farmers</span> and <span className="text-[#0EB770]">Customers</span> into one picture</h2>
+                    <p className='text-center text-[#25313C] mt-[50px]'>
                         A tool that enables Farmers and End-Users (Customers) to engage in a form of exchange (buying and selling) of goods, fostering positive relationships between them, lowering the rate of inflation, and creating a favorable environment for trade.
                     </p>
 
                     <div className="flex flex-row justify-center mt-[30px]">
-                        <Link to="/home" className="bg-[#0EB770] rounded-[30px] p-2 text-[12px] font-[800]">Proceed as Customer</Link>
+                        <Link to="/home" className="bg-[#0EB770] rounded-[30px] text-center pt-[20px] pl-[34px] pb-[30px] pr-[34px] text-[10px] font-[800] w-[200px] h-[30px]">Proceed as Customer</Link>
                     </div>
 
-                    <div className="flex flex-row justify-center mt-[101px]">
+                    <div className="flex flex-row justify-center mt-[60px]">
                         <img src={image1} className="w-[500px] " />
                     </div>
                 </div>
@@ -69,14 +69,14 @@ export default function Dashboard() {
             </div>
             <div className="section-3 mt-[100px] flex flex-row justify-center">
                 <div className="w-[70%] flex flex-col">
-                    <h2 className="text-center text-[59px] font-[800]">Helping you get the Perfect Market</h2>
+                    <h2 className="text-center text-[59px] font-[800] leading-[72px]">Helping you get the <span className="text-[#0EB770]">Perfect</span> Market</h2>
                     <p className='text-center text-[#25313C]'>
                         connecting you with millions of customers in Nigeria and around the world.
                         providing a platform for you to upload product images and sell your product to customers without any hassle.
                     </p>
 
                     <div className="flex flex-row justify-center mt-[30px]">
-                        <Link to="/home" className="bg-[#0EB770] rounded-[30px] p-2 text-[12px] font-[800]">Proceed as Customer</Link>
+                        <Link to="/home" className="bg-[#0EB770] rounded-[30px] text-center pt-[20px] pl-[34px] pb-[30px] pr-[34px] text-[10px] font-[800] w-[200px] h-[30px]">Proceed as Customer</Link>
                     </div>
 
                     <div className="flex flex-row justify-center mt-[201px]">

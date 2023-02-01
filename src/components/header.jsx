@@ -18,9 +18,9 @@ export default function Header() {
                     </div>
                 </div>
                 <div className="w-[25%] flex flex-row justify-center">
-                    <img src={image10} className="w-[35px] h-[35px]"/>
-                    <img src={image9} className="ml-5 w-[35px] h-[35px]" />
-                    <img src={image8} className="ml-5 w-[35px] h-[35px]" />
+                    <img src={image10} className="w-[35px] h-[35px] cursor-pointer"/>
+                    <img src={image9} className="ml-5 w-[35px] h-[35px] cursor-pointer" />
+                    <img src={image8} className="ml-5 w-[35px] h-[35px] cursor-pointer" />
                 </div>
             </div>
            </div>
