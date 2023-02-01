@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Auth from './screens/auth';
 import Dashboard from "./screens/dashboard";
 import Home from "./screens/home";
+import MainProduct from "./screens/mainproduct";
 import MainCategory from "./screens/main_categories";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Route path="dashboard" element={<Dashboard/>}/>
       <Route path="home" element={<Home/>}/>
       <Route path="category/:userid" element={<MainCategory/>}/>
+      <Route path="main/product" element={<MainProduct/>}/>
     </Routes>
     </BrowserRouter>
   )
