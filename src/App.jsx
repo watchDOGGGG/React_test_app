@@ -4,6 +4,7 @@ import Dashboard from "./screens/dashboard";
 import Home from "./screens/home";
 import MainProduct from "./screens/mainproduct";
 import MainCategory from "./screens/main_categories";
+import ProductOverview from "./screens/product_overview";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="home" element={<Home/>}/>
       <Route path="category/:userid" element={<MainCategory/>}/>
       <Route path="main/product" element={<MainProduct/>}/>
+      <Route path="product/overview" element={<ProductOverview/>}/>
     </Routes>
     </BrowserRouter>
   )

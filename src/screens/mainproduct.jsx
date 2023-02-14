@@ -1,13 +1,7 @@
 import React from 'react'
 import Footer from '../components/footer'
 import Header from '../components/header'
-import image11 from '../assets/11.png'
-import image12 from '../assets/12.png'
-import image13 from '../assets/13.png'
-import image15 from '../assets/15.png'
 import image16 from '../assets/16.png'
-import image17 from '../assets/17.png'
-import image18 from '../assets/18.png'
 import image21 from '../assets/21.png'
 
 export default function MainProduct() {
