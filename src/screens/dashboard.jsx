@@ -76,7 +76,7 @@ export default function Dashboard() {
                     </p>
 
                     <div className="flex flex-row justify-center mt-[30px]">
-                        <Link to="/home" className="bg-[#0EB770] rounded-[30px] text-center pt-[20px] pl-[34px] pb-[30px] pr-[34px] text-[10px] font-[800] w-[200px] h-[30px]">Proceed as Customer</Link>
+                        <Link to="/home" className="bg-[#0EB770] rounded-[30px] text-center pt-[20px] pl-[34px] pb-[30px] pr-[34px] text-[10px] font-[800] w-[200px] h-[30px]">Proceed as Farmer</Link>
                     </div>
 
                     <div className="flex flex-row justify-center mt-[201px]">

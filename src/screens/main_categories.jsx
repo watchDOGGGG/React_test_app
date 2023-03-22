@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Footer from '../components/footer'
 import Header from '../components/header'
 import image11 from '../assets/11.png'
