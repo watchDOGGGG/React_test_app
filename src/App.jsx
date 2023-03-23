@@ -9,6 +9,7 @@ import AdminLogin from "./screens/AdminLogin";
 import UploadScreen from "./screens/uploadScreen";
 import FarmerProfile from "./screens/farmerProfile";
 import CreateProduct from "./screens/createProduct";
+import CreateAccount from "./screens/createAccount";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route path="/uploadScreen" element={<UploadScreen />} />
       <Route path="/farmerprofile" element={<FarmerProfile/>}/>
       <Route path="/createProduct" element={<CreateProduct />}/>
+      <Route path="/createAccount" element={<CreateAccount />}/>
     </Routes>
     </BrowserRouter>
   )
