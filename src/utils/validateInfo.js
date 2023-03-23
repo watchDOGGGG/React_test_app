@@ -30,12 +30,12 @@ export const validateLogin = (values) => {
 export const validateSignUp = (values) => {
     let errors = {};
 
-    if (!values.firstName.trim()) {
-        errors.firstName = "First Name Required"
+    if (!values.firstname.trim()) {
+        errors.firstname = "First Name Required"
     }
 
-    if (!values.lastName.trim()) {
-        errors.lastName = "Last Name Required"
+    if (!values.lastname.trim()) {
+        errors.lastname = "Last Name Required"
     }
 
     if (!values.email) {
@@ -44,14 +44,14 @@ export const validateSignUp = (values) => {
         errors.email = "Email is invalid"
     }
 
-    if (!values.phoneNumber) {
-        errors.phoneNumber = "Phone Number is Required"
-    } else if (values.phoneNumber.length < 11) {
-        errors.phoneNumber = "Phone Number need to be 8 characters and above"
+    if (!values.phone) {
+        errors.phone = "Phone Number is Required"
+    } else if (values.phone.length < 11) {
+        errors.phone = "Phone Number need to be 8 characters and above"
     }
 
-    if(!values.userName){
-        errors.userName = "User Name is Required"
+    if(!values.username){
+        errors.username = "User Name is Required"
     }
 
     if (!values.role) {

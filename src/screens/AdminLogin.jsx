@@ -13,11 +13,11 @@ export default function Login() {
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
-		const payload = { username, password };
-		setError(validateAdmin(payload));
+		const values = { username, password };
+		setError(validateAdmin(values));
 		if (username && password) {
 			setSubmitted(true);
-			const response = await adminlogin(payload);
+			const response = await adminlogin(values);
 			const finalResponse = await response.json();
 			if (finalResponse?.message.includes("successful")) {
 				navigate('/dashboard');

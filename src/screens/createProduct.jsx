@@ -7,7 +7,7 @@ export default function UploadScreen() {
 		<div className='pl-12 pr-12'>
 			<Header />
 			<div className='p-7 mt-12'>
-				<div className='flex items-center justify-center text-center w-full h-20 bg-green-500 rounded-2xl'>
+				<div className='flex items-center justify-center text-center p-3 w-full h-20 bg-green-500 rounded-2xl'>
 					<p className='text-white font-extrabold text-2xl'>Product Details</p>
 				</div>
 				<div className='flex flex-row items-center justify-between mt-10'>

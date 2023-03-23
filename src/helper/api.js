@@ -72,6 +72,21 @@ export const viewFarmersProduct = async (id) => {
     }
 }
 
+export const createAccount = async (payload) => {
+    try {
+        return await (await fetch(`${baseUrl}/createuser`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        }));
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 // viewfarmersproduct/:id
 // export const login = async (payload) => {
 //     try {

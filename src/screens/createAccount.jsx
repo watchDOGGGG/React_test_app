@@ -1,35 +1,55 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { createAccount } from '../helper/api';
 import { validateSignUp } from '../utils/validateInfo';
 
 export default function CreateAccount() {
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
+	const [firstname, setFirstName] = useState('');
+	const [lastname, setLastName] = useState('');
 	const [email, setEmail] = useState('');
-	const [phoneNumber, setPhoneNumber] = useState('');
-	const [userName, setUserName] = useState('');
+	const [phone, setPhoneNumber] = useState('');
+	const [username, setUserName] = useState('');
 	const [role, setRole] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
+	const [err, setErr] = useState([]);
+	const [isSubmitted, setIsSubmitted] = useState(false);
+	const navigate = useNavigate();
 
 	const onHandleSubmit = async (e) => {
 		e.preventDefault();
 
 		const values = {
-			firstName,
-			lastName,
+			firstname,
+			lastname,
 			email,
-			phoneNumber,
-			userName,
+			phone,
+			username,
 			role,
 			password
 		}
 
 		setError(validateSignUp(values));
+		setIsSubmitted(false);
+		const response = await createAccount(values);
+		const finalResponse = await response.json();
 
-
-
-
+		if (finalResponse.message.includes("Successfully")) {
+			setIsSubmitted(true);
+			delete values.password;
+			localStorage.setItem('user', JSON.stringify(values));
+			if (values.role === 'customer') {
+				navigate('/farmerProfile')
+			} else {
+				navigate('/uploadScreen')
+			}
+		} else {
+			setIsSubmitted(false);
+			setErr(finalResponse?.message);
+			setTimeout(() => {
+				setErr('')
+			}, 7000);
+		}
 	}
 
 	return (
@@ -44,8 +64,8 @@ export default function CreateAccount() {
 						onChange={(e) => setFirstName(e.target.value)}
 					/>
 				</div>
-				{error.firstName && (
-					<p className='text-red-600 text-sm font-bold'>{error.firstName}</p>
+				{error.firstname && (
+					<p className='text-red-600 text-sm font-bold'>{error.firstname}</p>
 				)}
 
 				<div className='flex flex-col mt-5 space-y-3 font-bold'>
@@ -56,8 +76,8 @@ export default function CreateAccount() {
 						onChange={(e) => setLastName(e.target.value)}
 					/>
 				</div>
-				{error.lastName && (
-					<p className='text-red-600 text-sm font-bold'>{error.lastName}</p>
+				{error.lastname && (
+					<p className='text-red-600 text-sm font-bold'>{error.lastname}</p>
 				)}
 
 				<div className='flex flex-col mt-5 space-y-3 font-bold'>
@@ -80,8 +100,8 @@ export default function CreateAccount() {
 						onChange={(e) => setPhoneNumber(e.target.value)}
 					/>
 				</div>
-				{error.phoneNumber && (
-					<p className='text-red-600 text-sm font-bold'>{error.phoneNumber}</p>
+				{error.phone && (
+					<p className='text-red-600 text-sm font-bold'>{error.phone}</p>
 				)}
 
 				<div className='flex flex-col mt-5 space-y-3 font-bold'>
@@ -92,8 +112,8 @@ export default function CreateAccount() {
 						onChange={(e) => setUserName(e.target.value)}
 					/>
 				</div>
-				{error.userName && (
-					<p className='text-red-600 text-sm font-bold'>{error.userName}</p>
+				{error.username && (
+					<p className='text-red-600 text-sm font-bold'>{error.username}</p>
 				)}
 
 				<div className='flex flex-col mt-5 space-y-3 font-bold'>
@@ -123,10 +143,14 @@ export default function CreateAccount() {
 					<p className='text-red-600 text-sm font-bold'>{error.password}</p>
 				)}
 
+				{err && (
+					<p className='text-red-600 text-sm font-bold'>{err}</p>
+				)}
+
 				<button
 					className='h-16 w-full bg-green-500 text-center rounded-2xl mt-10 font-bold text-white'
 					onClick={onHandleSubmit}>
-					Done
+					{isSubmitted ? <>Loading...</> : <>Done</>}
 				</button>
 				<button className='h-16 w-full border-2 text-center rounded-2xl mt-10 font-bold text-black'>
 					Continue with email
@@ -138,7 +162,7 @@ export default function CreateAccount() {
 			</form>
 			<p className='text-xs mt-12'>Already have an Account?</p>
 			<div className='w-96 p-4 mb-10'>
-				<Link to="/">
+				<Link to='/'>
 					<button className='h-16 w-full border-2 text-center rounded-2xl mt-10 font-bold text-black'>
 						Login
 					</button>
