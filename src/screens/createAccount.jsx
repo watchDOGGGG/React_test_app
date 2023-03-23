@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from './../components/header';
-import add from './../assets/add.svg';
 
 export default function CreateAccount() {
 	return (
@@ -16,7 +14,7 @@ export default function CreateAccount() {
 				</div>
 				<div class='flex flex-col mt-5 space-y-3 font-bold'>
 					<label for='phone'>LastName</label>
-					<input                                                                    
+					<input
 						type='text'
 						className='h-16 w-full border-2 rounded-2xl p-1'
 					/>
@@ -49,6 +47,30 @@ export default function CreateAccount() {
 						<option value='farmer'>Farmer</option>
 					</select>
 				</div>
+				<div class='flex flex-col mt-5 space-y-3 font-bold'>
+					<label for='phone'>Password</label>
+					<input
+						type='text'
+						className='h-16 w-full border-2 rounded-2xl p-1'
+					/>
+				</div>
+
+				<button className='h-16 w-full bg-green-500 text-center rounded-2xl mt-10 font-bold text-white'>
+					Done
+				</button>
+				<button className='h-16 w-full border-2 text-center rounded-2xl mt-10 font-bold text-black'>
+					Continue with email
+				</button>
+				<div className='flex flex-col text-center text-xs items-center justify-center font-bold mt-12 mb-8'>
+					<p>By signing up you agree to our teams and conditions</p>
+					<p>& privacy policy</p>
+				</div>
+			</div>
+			<p className="text-xs mt-12">Already have an Account?</p>
+			<div className='w-96 p-4 mb-10'>
+				<button className='h-16 w-full border-2 text-center rounded-2xl mt-10 font-bold text-black'>
+					Login
+				</button>
 			</div>
 		</div>
 	);
