@@ -6,11 +6,13 @@ import image10 from '../assets/10.png'
 import image6 from '../assets/6.png'
 
 export default function Header() {
+	const user = JSON.parse(localStorage.getItem('user')) || [];
+	const firstName = user.firstname.split('')[0];
+	const lastName = user.lastname.split('')[0];
     const [inputText, setInputText] = useState('');
-	const [click, setClick] = useState('');
+	const [, setClick] = useState('');
 	const [products, setProducts] = useState();
 	const navigate = useNavigate();
-	console.log(click);
 
 	const getProducts = async () => {
 		const response = await displayfarmer_product();
@@ -36,7 +38,7 @@ export default function Header() {
 								<img
 									src={image6}
 									className=' w-[85px] h-[35px]'
-								/>	
+								/>
 							</Link>
 						</div>
 						<div className='flex flex-col justify-around w-[50%]'>
@@ -73,7 +75,7 @@ export default function Header() {
 								''
 							)}
 						</div>
-						<div className='w-[25%] flex flex-row justify-center'>
+						<div className='w-[25%] flex flex-row justify-center space-x-4'>
 							<img
 								src={image10}
 								className='w-[35px] h-[35px] cursor-pointer'
@@ -82,10 +84,12 @@ export default function Header() {
 								src={image9}
 								className='ml-5 w-[35px] h-[35px] cursor-pointer'
 							/>
-							<img
-								src={image8}
-								className='ml-5 w-[35px] h-[35px] cursor-pointer'
-							/>
+							<div className='flex items-center justify-center border-2 border-fuchsia-600 h-12 w-12 rounded-full'>
+								<p className='text-3xl font-thin text-fuchsia-700'>
+									{firstName}
+									{lastName}
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>

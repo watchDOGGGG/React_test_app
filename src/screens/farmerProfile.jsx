@@ -7,15 +7,21 @@ import bookmark from '../assets/bookmark.svg'
 
 export default function FarmerProfile() {
 	const user = JSON.parse(localStorage.getItem('user')) || [];
-	console.log(user);
+	const firstName = user.firstname.split('')[0];
+	const lastName = user.lastname.split('')[0];
 
 	return (
 		<div>
 			<Header />
 			<div className='flex flex-col items-center justify-center p-6'>
-				<div className='border-2 h-36 w-36 rounded-full'></div>
+				<div className='flex items-center justify-center border-2 border-fuchsia-600 h-36 w-36 rounded-full'>
+					<p className='text-7xl font-bold text-fuchsia-700'>
+						{firstName}
+						{lastName}
+					</p>
+				</div>
 				<div className='flex flex-col text-center text-2xl font-extrabold mt-10'>
-					<p>Farmer's Name: Isreal Poutry</p>
+					<p>{`Farmer's name: ${user.firstname} ${user.lastname}`}</p>
 					<p>Framers ID: #245461</p>
 				</div>
 				<div className='flex flex-row items justify-center text-center space-x-2 mt-16'>
