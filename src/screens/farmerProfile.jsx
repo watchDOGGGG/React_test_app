@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/header';
 import notification from '../assets/notification.svg';
 import chat from '../assets/chat.svg';
 import bookmark from '../assets/bookmark.svg'
 
 export default function FarmerProfile() {
+	const user = JSON.parse(localStorage.getItem('user')) || [];
+	console.log(user);
+
 	return (
 		<div>
 			<Header />
@@ -39,9 +43,28 @@ export default function FarmerProfile() {
 						/>
 					</button>
 				</div>
-				<button className='p-3 font-bold text-white w-40 bg-black rounded-full mt-10'>create post</button>
-				<p className='font-bold mt-8 text-2xl'>Posted Product</p>
+				{user.role === 'farmer' ? (
+					<>
+						<Link to='/createProduct'>
+							<button className='p-3 font-bold text-white w-40 bg-black rounded-full mt-10'>
+								create post
+							</button>
+						</Link>
+						<p className='font-bold mt-8 text-2xl'>Posted Product</p>
+					</>
+				) : (
+					''
+				)}
 			</div>
+			{user.role === 'customer' ? (
+				<div className='flex flex-row items-center justify-end p-12 mb-12'>
+					<button className='p-3 font-bold text-white w-40 bg-black rounded-full -mt-10'>
+						create post
+					</button>
+				</div>
+			) : (
+				''
+			)}
 		</div>
 	);
 }
