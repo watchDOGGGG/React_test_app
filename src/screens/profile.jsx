@@ -5,7 +5,7 @@ import notification from '../assets/notification.svg';
 import chat from '../assets/chat.svg';
 import bookmark from '../assets/bookmark.svg'
 
-export default function FarmerProfile() {
+export default function Profile() {
 	const user = JSON.parse(localStorage.getItem('user')) || [];
 	const firstName = user.firstname.split('')[0];
 	const lastName = user.lastname.split('')[0];
@@ -21,8 +21,14 @@ export default function FarmerProfile() {
 					</p>
 				</div>
 				<div className='flex flex-col text-center text-2xl font-extrabold mt-10'>
-					<p>{`Farmer's name: ${user.firstname} ${user.lastname}`}</p>
-					<p>Framers ID: #245461</p>
+					<p>{`${user.role === "farmer" ? 'Farmer' : 'Customer'}'s name: ${user.firstname} ${user.lastname}`}</p>
+					{user.role === "farmer" && (
+						<p>{`Farmer's ID: ${user.role_id}`}</p>
+					)}
+					{user.role === "customer" && (
+						<p>{`Customer's ID: ${user.role_id}`}</p>
+					)}
+					{/* <p>{`Farmer's ID: ${user.farmer_id ? user.farmer_id : user.customer_id}`}</p> */}
 				</div>
 				<div className='flex flex-row items justify-center text-center space-x-2 mt-16'>
 					<button>

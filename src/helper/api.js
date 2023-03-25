@@ -86,6 +86,18 @@ export const createAccount = async (payload) => {
     }
 }
 
+export const createProduct = async (formData) => {
+    try {
+        const response = await fetch(`${baseUrl}/uploadfarmer_prod`, {
+            method: 'POST',
+            body: formData,
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 
 // viewfarmersproduct/:id
 // export const login = async (payload) => {

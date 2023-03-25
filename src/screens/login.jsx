@@ -1,26 +1,34 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateLogin } from '../utils/validateInfo';
-import { adminlogin } from '../helper/api';
+import { login } from '../helper/api';
 
 export default function Login() {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
+	const [err, setErr] = useState([]);
 	const [submitted, setSubmitted] = useState(false);
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
 		const payload = { email, password };
 		setError(validateLogin(payload));
-		if (email && password) {
-			setSubmitted(true);
-			const response = await adminlogin(payload);
-			const finalResponse = await response.json();
-			console.log(finalResponse);
-			navigate('/dashboard');
+		setSubmitted(true);
+		const response = await login(payload);
+		const finalResponse = await response.json();
+		if (finalResponse.message.includes("SUCCESS")) {
+			localStorage.setItem('user', JSON.stringify(finalResponse?.data));
+		    navigate('/dashboard');
+		} else {
+			setSubmitted(false);
+			setErr(finalResponse?.message);
+			setTimeout(() => {
+				setErr('');
+			}, 7000);
 		}
+		
 	};
 
 	return (
@@ -62,11 +70,17 @@ export default function Login() {
 							{error.password}
 						</p>
 					)}
+
+					{err && (
+						<p className='text-red-600 text-sm font-bold ml-8 mt-3'>
+							{err}
+						</p>
+					)}
 					<div className='text-input ml-[31px] w-[495px] mt-[40px] mb-[53px]'>
 						<button
 							type='submit'
 							className='w-full rounded-[28px] p-2 bg-[#0EB770] text-white'
-							disabled={submitted ? 'bg-green-200' : ''}>
+							disabled={submitted ? 'bg-green-100' : ''}>
 							{submitted ? <>Loading...</> : <>Done</>}
 						</button>
 					</div>

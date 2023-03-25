@@ -26,28 +26,27 @@ export default function CreateAccount() {
 			phone,
 			username,
 			role,
-			password
-		}
+			password,
+		};
 
 		setError(validateSignUp(values));
 		setIsSubmitted(false);
 		const response = await createAccount(values);
 		const finalResponse = await response.json();
-
-		if (finalResponse.message.includes("Successfully")) {
+		if (finalResponse.message.includes('Successfully')) {
 			setIsSubmitted(true);
 			delete values.password;
-			localStorage.setItem('user', JSON.stringify(values));
+			localStorage.setItem('user', JSON.stringify(finalResponse?.data));
 			if (values.role === 'customer') {
-				navigate('/farmerProfile')
+				navigate('/farmerProfile');
 			} else {
-				navigate('/uploadScreen')
+				navigate('/uploadScreen');
 			}
 		} else {
 			setIsSubmitted(false);
 			setErr(finalResponse?.message);
 			setTimeout(() => {
-				setErr('')
+				setErr('');
 			}, 7000);
 		}
 	}

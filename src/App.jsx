@@ -7,7 +7,7 @@ import MainCategory from "./screens/main_categories";
 import ProductOverview from "./screens/product_overview";
 import AdminLogin from "./screens/AdminLogin";
 import UploadScreen from "./screens/uploadScreen";
-import FarmerProfile from "./screens/farmerProfile";
+import Profile from "./screens/Profile";
 import CreateProduct from "./screens/createProduct";
 import CreateAccount from "./screens/createAccount";
 
@@ -24,7 +24,7 @@ function App() {
       <Route path="main/product" element={<MainProduct/>}/>
       <Route path="/product/:id" element={<ProductOverview/>}/>
       <Route path="/uploadScreen" element={<UploadScreen />} />
-      <Route path="/farmerprofile" element={<FarmerProfile/>}/>
+      <Route path="/profile" element={<Profile/>}/>
       <Route path="/createProduct" element={<CreateProduct />}/>
       <Route path="/createAccount" element={<CreateAccount />}/>
     </Routes>
