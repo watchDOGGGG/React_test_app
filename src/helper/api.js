@@ -72,6 +72,34 @@ export const viewFarmersProduct = async (id) => {
     }
 }
 
+export const viewSingleProduct = async (id) => {
+    try {
+        return await (await fetch(`${baseUrl}/viewSingleProduct/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify()
+        }));
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getSingleFarmer = async (id) => {
+    try {
+        return await (await fetch(`${baseUrl}/getSingleFarmer/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify()
+        }));
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const createAccount = async (payload) => {
     try {
         return await (await fetch(`${baseUrl}/createuser`, {

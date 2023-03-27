@@ -38,7 +38,7 @@ export default function CreateAccount() {
 			delete values.password;
 			localStorage.setItem('user', JSON.stringify(finalResponse?.data));
 			if (values.role === 'customer') {
-				navigate('/farmerProfile');
+				navigate('/profile');
 			} else {
 				navigate('/uploadScreen');
 			}

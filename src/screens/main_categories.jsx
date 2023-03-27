@@ -10,6 +10,7 @@ import image17 from '../assets/17.png'
 import image18 from '../assets/18.png'
 import image20 from '../assets/20.png'
 
+
 export default function MainCategory() {
     return (
         <div className="w-full">

@@ -3,16 +3,29 @@ import { Link, useNavigate } from 'react-router-dom';
 import { displayfarmer_product } from '../helper/api';import image8 from '../assets/8.png'
 import image9 from '../assets/9.png'
 import image10 from '../assets/10.png'
-import image6 from '../assets/6.png'
+import image6 from '../assets/6.png';
+import avater from '../assets/avater.svg';
 
 export default function Header() {
-	const user = JSON.parse(localStorage.getItem('user')) || [];
-	const firstName = user.firstname.split('')[0];
-	const lastName = user.lastname.split('')[0];
-    const [inputText, setInputText] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
+	const [user, setUser] = useState('');
+	const [inputText, setInputText] = useState('');
 	const [, setClick] = useState('');
-	const [products, setProducts] = useState();
+	const [products, setProducts] = useState([]);
 	const navigate = useNavigate();
+	console.log(firstName);
+	console.log(lastName);
+	// console.log(user);
+
+	useEffect(() => {
+		const storedUser = JSON.parse(localStorage.getItem('user')) || [];
+		setUser(storedUser);
+		if (storedUser.id) {
+			setFirstName(storedUser.firstname.split('')[0]);
+			setLastName(storedUser.lastname.split('')[0]);
+		}
+	}, [setUser]);
 
 	const getProducts = async () => {
 		const response = await displayfarmer_product();
@@ -84,12 +97,24 @@ export default function Header() {
 								src={image9}
 								className='ml-5 w-[35px] h-[35px] cursor-pointer'
 							/>
-							<div className='flex items-center justify-center border-2 border-fuchsia-600 h-12 w-12 rounded-full'>
-								<p className='text-3xl font-thin text-fuchsia-700'>
-									{firstName}
-									{lastName}
-								</p>
-							</div>
+							{user.firstname ? (
+								<Link to='/profile'>
+									<div className='flex items-center justify-center border-2 border-fuchsia-600 h-9 w-9 rounded-full'>
+										<p className='text-xl font-thin text-fuchsia-700'>
+											{firstName}
+											{lastName}
+										</p>
+									</div>
+								</Link>
+							) : (
+								<div>
+									<img
+										src={avater}
+										alt={avater}
+										className='h-8 w-8'
+									/>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

@@ -88,7 +88,7 @@ export default function UploadScreen() {
 					<p>● Voter's Card</p>
 					<p>● Driver's Lincences</p>
 				</div>
-				<Link to={`/farmerProfile`}>
+				<Link to={`/profile`}>
 					<button className='bg-green-500 text-white mt-10 h-12 rounded-full font-bold w-[500px]'>
 						Proceed
 					</button>

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { viewFarmersProduct } from '../helper/api';
 import Header from '../components/header';
 import notification from '../assets/notification.svg';
 import chat from '../assets/chat.svg';
@@ -9,6 +10,20 @@ export default function Profile() {
 	const user = JSON.parse(localStorage.getItem('user')) || [];
 	const firstName = user.firstname.split('')[0];
 	const lastName = user.lastname.split('')[0];
+	const [product, setProduct] = useState();
+
+	const getFramersProduct = async (id) => {
+		const res = await viewFarmersProduct(id);
+		const finalRes = await res.json();
+		setProduct(finalRes);
+	}
+
+	console.log(product?.results);
+	// getFramersProduct(user.role_id);
+
+	useEffect(() => {
+		getFramersProduct(user.role_id);
+	}, []);
 
 	return (
 		<div>
@@ -21,11 +36,11 @@ export default function Profile() {
 					</p>
 				</div>
 				<div className='flex flex-col text-center text-2xl font-extrabold mt-10'>
-					<p>{`${user.role === "farmer" ? 'Farmer' : 'Customer'}'s name: ${user.firstname} ${user.lastname}`}</p>
-					{user.role === "farmer" && (
-						<p>{`Farmer's ID: ${user.role_id}`}</p>
-					)}
-					{user.role === "customer" && (
+					<p>{`${user.role === 'farmer' ? 'Farmer' : 'Customer'}'s name: ${
+						user.firstname
+					} ${user.lastname}`}</p>
+					{user.role === 'farmer' && <p>{`Farmer's ID: ${user.role_id}`}</p>}
+					{user.role === 'customer' && (
 						<p>{`Customer's ID: ${user.role_id}`}</p>
 					)}
 					{/* <p>{`Farmer's ID: ${user.farmer_id ? user.farmer_id : user.customer_id}`}</p> */}
@@ -67,11 +82,44 @@ export default function Profile() {
 				) : (
 					''
 				)}
+
+				{product && user.role === 'farmer' && (
+					<div className='mt-[20px] grid grid-cols-3 gap-4 space-x-2 space-y-4 items-center justify-center'>
+						{product?.results?.map((items, value) => (
+							<Link to={`product/${items.id}`}>
+								<div
+									key={value}
+									className='flex flex-col w-[268px] bg-white p-[7.5px] rounded-t-xl'>
+									<div className='flex flex-row justify-center'>
+										<img
+											src={`http://localhost:5173/uploads/${items.filename}`}
+											// className='rounded-full h-44 w-44'
+										/>
+									</div>
+									<div className='flex flex-col text-left mt-[20px] leading-[27px] font-[700] text-[20px]'>
+										<h3>{`Basket of ${items.productname}`}</h3>
+										<span className='text-[#0EB770] text-[18px]'>
+											{`₦${items.price}`}
+										</span>
+										<div className='flex flex-row'>
+											<span className='text-[#6F6F6F] line-through text-[16px] font-[400]'>
+												# 20,000
+											</span>
+											<div className='text-[#CB77D9] font-[400] text-[11px] w-[29px] pl-1 text-center bg-[#CB77D9] bg-opacity-[0.1] ml-[0.6px]'>
+												<span>-50%</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</Link>
+						))}
+					</div>
+				)}
 			</div>
 			{user.role === 'customer' ? (
 				<div className='flex flex-row items-center justify-end p-12 mb-12'>
 					<button className='p-3 font-bold text-white w-40 bg-black rounded-full -mt-10'>
-						create post
+						Keep Shopping
 					</button>
 				</div>
 			) : (

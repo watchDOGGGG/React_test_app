@@ -66,7 +66,7 @@ export default function Home() {
 
 							<div className='mt-[20px] flex flex-row justify-between'>
 								{products?.slice(0, 4).map((items, index) => (
-									<Link to={`product/${items.id}`}>
+									<Link to={`/product/${items.id}`}>
 										<div
 											className='flex flex-col w-[267px]'
 											key={index}>

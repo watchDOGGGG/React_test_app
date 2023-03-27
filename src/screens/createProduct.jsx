@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { createProduct } from '../helper/api';
 import Header from './../components/header';
 import add from './../assets/add.svg';
 
 export default function UploadScreen() {
 	const user = JSON.parse(localStorage.getItem('user')) || []; 
-	const [fileName, setFileName] = useState([]);
+	const [fileName, setFileName] = useState("");
+	const [res, setRes] = useState(null);
 	const [price, setPrice] = useState("");
 	const [title, setTitle] = useState("");
 
@@ -19,9 +19,23 @@ export default function UploadScreen() {
 		formData.append('productname', title);
 		formData.append('farmer_id', user.role ? user.role_id : '');
 
-		const response = await createProduct(formData);
-		const finalRes = await response.json();
-		console.log(finalRes);
+		if (fileName.name && price && title) {
+			const response = await createProduct(formData);
+	        await response.json();	
+			setRes("Product successfully created*");
+			setPrice("");
+			setTitle("");
+			setFileName("");
+			setTimeout(() => {
+				setRes("")
+			}, 5000);
+		} else {
+			setRes("Please fill in all the required field (add image icon, title & price)*");
+			setTimeout(() => {
+				setRes("")
+			}, 5000);
+
+		}
 	};
 
 
@@ -41,6 +55,7 @@ export default function UploadScreen() {
 				<div className='flex items-center justify-center text-center p-3 w-full h-20 bg-green-500 rounded-2xl'>
 					<p className='text-white font-extrabold text-2xl'>Product Details</p>
 				</div>
+
 				<div className='flex flex-row items-center justify-between mt-10'>
 					<div className='space-y-3 w-1/2 pr-10'>
 						<p>Category</p>
@@ -85,7 +100,7 @@ export default function UploadScreen() {
 						/>
 					</label>
 				</div>
-				{/* {fileName ? <div className='mt-2'>{fileName}</div> : ''} */}
+				{fileName ? <div className='mt-2'>{fileName.name}</div> : ''}
 				<div className='mt-4'>
 					<p>each picture must not exceed 5 Mb</p>
 					<p>Supported formats are *jpg and *png</p>
@@ -97,6 +112,7 @@ export default function UploadScreen() {
 							<input
 								type='text'
 								className='h-16 w-full border-2 rounded-2xl p-1'
+								value={title}
 								onChange={(e) => setTitle(e.target.value)}
 							/>
 						</div>
@@ -122,10 +138,14 @@ export default function UploadScreen() {
 						<input
 							type='text'
 							className='h-16 w-full border-2 rounded-2xl p-1'
+							value={price}
 							onChange={(e) => setPrice(e.target.value)}
 						/>
 					</div>
 				</div>
+
+				{res && <h1 className='text-3xl text-emerald-400 mt-3'>{res}</h1>}
+
 				<div className='flex items-center justify-center mt-28 mb-12'>
 					<button
 						onClick={handleSubmitForm}
