@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { viewFarmersProduct } from '../helper/api';
+import { viewFarmerProducts } from '../helper/api';
 import Header from '../components/header';
 import notification from '../assets/notification.svg';
 import chat from '../assets/chat.svg';
@@ -8,18 +8,14 @@ import bookmark from '../assets/bookmark.svg'
 
 export default function Profile() {
 	const user = JSON.parse(localStorage.getItem('user')) || [];
-	const firstName = user.firstname.split('')[0];
-	const lastName = user.lastname.split('')[0];
 	const [product, setProduct] = useState();
 
 	const getFramersProduct = async (id) => {
-		const res = await viewFarmersProduct(id);
+		const res = await viewFarmerProducts(id);
 		const finalRes = await res.json();
 		setProduct(finalRes);
 	}
 
-	console.log(product?.results);
-	// getFramersProduct(user.role_id);
 
 	useEffect(() => {
 		getFramersProduct(user.role_id);
@@ -29,11 +25,12 @@ export default function Profile() {
 		<div>
 			<Header />
 			<div className='flex flex-col items-center justify-center p-6'>
-				<div className='flex items-center justify-center border-2 border-fuchsia-600 h-36 w-36 rounded-full'>
-					<p className='text-7xl font-bold text-fuchsia-700'>
-						{firstName}
-						{lastName}
-					</p>
+				<div className='flex items-center justify-center'>
+					<img
+						src={`http://localhost:5173/uploads/${user.filename}`}
+						alt={`http://localhost:5173/uploads/${user.filename}`}
+						className='w-44 h-44 rounded-full'
+					/>
 				</div>
 				<div className='flex flex-col text-center text-2xl font-extrabold mt-10'>
 					<p>{`${user.role === 'farmer' ? 'Farmer' : 'Customer'}'s name: ${
@@ -86,7 +83,7 @@ export default function Profile() {
 				{product && user.role === 'farmer' && (
 					<div className='mt-[20px] grid grid-cols-3 gap-4 space-x-2 space-y-4 items-center justify-center'>
 						{product?.results?.map((items, value) => (
-							<Link to={`product/${items.id}`}>
+							<Link to={`/product/${items.id}`}>
 								<div
 									key={value}
 									className='flex flex-col w-[268px] bg-white p-[7.5px] rounded-t-xl'>
@@ -117,11 +114,13 @@ export default function Profile() {
 				)}
 			</div>
 			{user.role === 'customer' ? (
-				<div className='flex flex-row items-center justify-end p-12 mb-12'>
-					<button className='p-3 font-bold text-white w-40 bg-black rounded-full -mt-10'>
-						Keep Shopping
-					</button>
-				</div>
+				<Link to={`/main/product`}>
+					<div className='flex flex-row items-center justify-end p-12 mb-12'>
+						<button className='p-3 font-bold text-white w-40 bg-black rounded-full -mt-10'>
+							Keep Shopping
+						</button>
+					</div>
+				</Link>
 			) : (
 				''
 			)}

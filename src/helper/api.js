@@ -58,9 +58,9 @@ export const displayfarmer_product = async () => {
     }
 }
 
-export const viewFarmersProduct = async (id) => {
+export const viewFarmerProducts = async (id) => {
     try {
-        return await (await fetch(`${baseUrl}/viewfarmersproduct/${id}`, {
+        return await (await fetch(`${baseUrl}/viewfarmerproducts/${id}`, {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json'
@@ -100,15 +100,27 @@ export const getSingleFarmer = async (id) => {
     }
 }
 
-export const createAccount = async (payload) => {
+export const getAllFarmer = async () => {
     try {
-        return await (await fetch(`${baseUrl}/createuser`, {
-            method: 'POST',
+        return await (await fetch(`${baseUrl}/getAllFarmers`, {
+            method: 'GET',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify()
         }));
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const createAccount = async (formData) => {
+    try {
+        const response = await fetch(`${baseUrl}/createuser`, {
+            method: 'POST',
+            body: formData 
+        });
+        return response;
     } catch (error) {
         console.log(error)
     }

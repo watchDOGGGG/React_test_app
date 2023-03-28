@@ -24,6 +24,8 @@ export default function ProductOverview() {
 		setProduct(Object.assign({}, ...data?.results));
 	};
 
+	console.log(farmer);
+
 	const getProducts = async () => {
 		const response = await displayfarmer_product();
 		const data = await response.json();

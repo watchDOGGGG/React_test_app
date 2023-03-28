@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createAccount } from '../helper/api';
 import { validateSignUp } from '../utils/validateInfo';
+import add from './../assets/add.svg';
 
 export default function CreateAccount() {
+	const [filename, setFileName] = useState('');
 	const [firstname, setFirstName] = useState('');
 	const [lastname, setLastName] = useState('');
 	const [email, setEmail] = useState('');
@@ -19,7 +21,18 @@ export default function CreateAccount() {
 	const onHandleSubmit = async (e) => {
 		e.preventDefault();
 
+		const formData = new FormData();
+		formData.append('file', filename);
+		formData.append('firstname', firstname);
+		formData.append('lastname', lastname);
+		formData.append('email', email);
+		formData.append('phone', phone);
+		formData.append('username', username);
+		formData.append('role', role);
+		formData.append('password', password);
+
 		const values = {
+			filename,
 			firstname,
 			lastname,
 			email,
@@ -31,25 +44,40 @@ export default function CreateAccount() {
 
 		setError(validateSignUp(values));
 		setIsSubmitted(false);
-		const response = await createAccount(values);
-		const finalResponse = await response.json();
-		if (finalResponse.message.includes('Successfully')) {
-			setIsSubmitted(true);
-			delete values.password;
-			localStorage.setItem('user', JSON.stringify(finalResponse?.data));
-			if (values.role === 'customer') {
-				navigate('/profile');
+
+		try {
+			const response = await createAccount(formData);
+			const finalResponse = await response.json();		
+
+			if (finalResponse.message.includes('Successfully')) {
+				setIsSubmitted(true);
+				delete values.password;
+				localStorage.setItem('user', JSON.stringify(finalResponse?.data));
+				if (values.role === 'customer') {
+					navigate('/profile');
+				} else {
+					navigate('/uploadScreen');
+				}
 			} else {
-				navigate('/uploadScreen');
+				setIsSubmitted(false);
+				setErr(finalResponse?.message);
+				setTimeout(() => {
+					setErr('');
+				}, 7000);
 			}
-		} else {
-			setIsSubmitted(false);
-			setErr(finalResponse?.message);
-			setTimeout(() => {
-				setErr('');
-			}, 7000);
+		} catch (error) {
+			console.error(error);
 		}
+		// const response = await createAccount(formData);
+		// const finalResponse = await response.json();
+
 	}
+
+	const handleFileUpload = (event) => {
+		const file = event.target.files[0];
+		setFileName(file);
+	};
+
 
 	return (
 		<div className='flex flex-col items-center justify-center mt-12'>
@@ -138,13 +166,34 @@ export default function CreateAccount() {
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 				</div>
+
+				<div className='flex flex-col mt-5 font-bold'>
+					<label>Add profile photo</label>
+					<div>
+						<input
+							type='file'
+							id='fileInput'
+							name='file'
+							style={{ display: 'none' }}
+							onChange={handleFileUpload}
+						/>
+						<label
+							htmlFor='fileInput'
+							className='flex items-center mt-2 text-ceneter p-2 h-16 w-16 border-black rounded-full border-2'>
+							<img
+								src={add}
+								alt={add}
+								className='h-12 w-12'
+							/>
+						</label>
+					</div>
+					{filename ? <div className='mt-2'>{filename.name}</div> : ''}
+				</div>
 				{error.password && (
 					<p className='text-red-600 text-sm font-bold'>{error.password}</p>
 				)}
 
-				{err && (
-					<p className='text-red-600 text-sm font-bold'>{err}</p>
-				)}
+				{err && <p className='text-red-600 text-sm font-bold'>{err}</p>}
 
 				<button
 					className='h-16 w-full bg-green-500 text-center rounded-2xl mt-10 font-bold text-white'
@@ -161,7 +210,7 @@ export default function CreateAccount() {
 			</form>
 			<p className='text-xs mt-12'>Already have an Account?</p>
 			<div className='w-96 p-4 mb-10'>
-				<Link to='/'>
+				<Link to='/login'>
 					<button className='h-16 w-full border-2 text-center rounded-2xl mt-10 font-bold text-black'>
 						Login
 					</button>

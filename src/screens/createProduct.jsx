@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createProduct } from '../helper/api';
+import { useNavigate } from 'react-router-dom';
 import Header from './../components/header';
 import add from './../assets/add.svg';
 
@@ -9,6 +10,7 @@ export default function UploadScreen() {
 	const [res, setRes] = useState(null);
 	const [price, setPrice] = useState("");
 	const [title, setTitle] = useState("");
+	const navigate = useNavigate();
 
 	const handleSubmitForm = async (event) => {
 		event.preventDefault();
@@ -27,8 +29,8 @@ export default function UploadScreen() {
 			setTitle("");
 			setFileName("");
 			setTimeout(() => {
-				setRes("")
-			}, 5000);
+				setRes(""), navigate('/profile')
+			}, 3000);
 		} else {
 			setRes("Please fill in all the required field (add image icon, title & price)*");
 			setTimeout(() => {

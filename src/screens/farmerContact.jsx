@@ -5,24 +5,10 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 
 export default function FarmerContact() {
+	const user = JSON.parse(localStorage.getItem('user')) || [];
     const { id } = useParams();
 	const [farmer, setFarmer] = useState(null);
-	const [user, setUser] = useState('')
 	const [products, setProducts] = useState([]);
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	console.log(firstName);
-	console.log(lastName);
-	// console.log(user);
-
-	useEffect(() => {
-		const storedUser = JSON.parse(localStorage.getItem('user')) || [];
-		setUser(storedUser);
-		if (storedUser.id) {
-			setFirstName(storedUser.firstname.split('')[0]);
-			setLastName(storedUser.lastname.split('')[0]);
-		}
-	}, [setUser]);
 
     const getFarmer = async (id) => {
 		const response = await getSingleFarmer(id);
@@ -50,10 +36,12 @@ export default function FarmerContact() {
 						<div className='flex flex-row items-center justify-center p-12 '>
 							<div className='w-1/4 p-1'>
 								<div className='flex flex-col items-center justify-center '>
-									<div className='flex items-center justify-center text-fuchsia-700 text-7xl font-bold h-36 w-36 p-4 border-2 rounded-full '>
-										<p>
-											{firstName}{lastName}
-										</p>
+									<div className='flex items-center justify-center'>
+										<img
+											src={`http://localhost:5173/uploads/${user.filename}`}
+											alt={`http://localhost:5173/uploads/${user.filename}`}
+											className='w-44 h-44 rounded-full'
+										/>
 									</div>
 									<p className='text-2xl font-extrabold mt-7'>{`Farmer ID: ${farmer.role_id}`}</p>
 									<button className='bg-green-500 w-full mt-7 p-5 text-3xl text-white font-extrabold rounded-full '>

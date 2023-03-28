@@ -1,23 +1,39 @@
 import React, {useState, useEffect} from 'react';
-import { displayfarmer_profile, displayfarmer_product } from '../helper/api';
+import { displayfarmer_product, getAllFarmer} from '../helper/api';
 import Footer from '../components/footer'
 import Header from '../components/header'
 import { Link } from 'react-router-dom'
 
 export default function Home() {
-    const [users, setUsers] = useState();
-	const [products, setProducts] = useState();
-	
-    const getUsersDetails = async ({setState, apiFetchDetail}) => {
-        const response = await apiFetchDetail();
-        const data = await response.json(); // extract the JSON data from the response
-        setState(data.data.usersDetails);
+	const [users, setUsers] = useState(null);
+	const [products, setProducts] = useState(null);
+	const [farmers, setFarmers] = useState(null);
+
+	const getAllProduct = async () => {
+		const response = await displayfarmer_product();
+		const data = await response.json(); // extract the JSON data from the response
+		setProducts(data.data.usersDetails);
+	};
+
+	const getAllFarmers = async () => {
+		const response = await getAllFarmer();
+		const data = await response.json(); // extract the JSON data from the response
+		setFarmers(data);
 	};
 
 	useEffect(() => {
-		getUsersDetails({ setState: setUsers, apiFetchDetail: displayfarmer_profile });
-		getUsersDetails({ setState: setProducts, apiFetchDetail: displayfarmer_product });
-    }, []);
+		getAllFarmers();
+		getAllProduct();
+	}, []);
+
+	useEffect(() => {
+		if (farmers) {
+			const arrObject = Object.values(farmers?.result);
+			setUsers(arrObject);
+		}
+	}, [farmers]);
+
+
 
     return (
 			<div className='w-full'>
@@ -40,7 +56,7 @@ export default function Home() {
 							<div className='mt-[20px] flex flex-row justify-between'>
 								{users?.slice(0, 4).map((values, index) => (
 									<Link
-										to='/category/1'
+										to={`/category/${values.role_id}`}
 										className='flex flex-col w-[267px]'
 										key={index}>
 										<div className='flex flex-row justify-center'>

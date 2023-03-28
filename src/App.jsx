@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Auth from './screens/auth';
+// import Auth from './screens/auth';
 import Home from "./screens/home";
 import Dashboard from "./screens/dashboard";
 import MainProduct from "./screens/mainproduct";
 import MainCategory from "./screens/main_categories";
 import ProductOverview from "./screens/product_overview";
 import AdminLogin from "./screens/AdminLogin";
+import Login from "./screens/Login";
 import UploadScreen from "./screens/uploadScreen";
 import Profile from "./screens/Profile";
 import CreateProduct from "./screens/createProduct";
@@ -17,20 +18,24 @@ function App() {
   return (
 		<BrowserRouter>
 			<Routes>
-				<Route
+				{/* <Route
 					path=''
 					element={<Auth />}
-				/>
-				<Route
+				/> */}
+				{/* <Route
 					path='auth/*'
 					element={<Auth />}
-				/>
+				/> */}
 				<Route
 					path='adminlogin'
 					element={<AdminLogin />}
 				/>
 				<Route
-					path='dashboard'
+					path='/Login'
+					element={<Login />}
+				/>
+				<Route
+					path='/'
 					element={<Dashboard />}
 				/>
 				<Route
@@ -38,7 +43,7 @@ function App() {
 					element={<Home />}
 				/>
 				<Route
-					path='category/:userid'
+					path='/category/:farmerId'
 					element={<MainCategory />}
 				/>
 				<Route
