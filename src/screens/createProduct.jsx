@@ -9,6 +9,7 @@ export default function UploadScreen() {
 	const [fileName, setFileName] = useState("");
 	const [res, setRes] = useState(null);
 	const [price, setPrice] = useState("");
+	const [error, setError] = useState("");
 	const [title, setTitle] = useState("");
 	const navigate = useNavigate();
 
@@ -43,8 +44,19 @@ export default function UploadScreen() {
 
 	const handleFileUpload = (event) => {
 		const file = event.target.files[0];
-		setFileName(file);
-	}
+		const fileNameParts = file.name.split('.');
+		const fileExtension = fileNameParts[fileNameParts.length - 1].toLowerCase();
+
+		if (file && !['jpeg', 'png', 'jpg', 'svg+xml'].includes(fileExtension)) {
+			setError(
+				'File type not supported. Please select a jpeg, png, jpg, or svg file.'
+			);
+			setFileName('');
+		} else {
+			setFileName(file);
+			setError('');
+		}
+	};
 
 	return (
 		<div className='pl-12 pr-12'>
@@ -103,6 +115,7 @@ export default function UploadScreen() {
 					</label>
 				</div>
 				{fileName ? <div className='mt-2'>{fileName.name}</div> : ''}
+				{error && <p className='text-red-600 text-sm font-bold mt-2'>{error}</p>}
 				<div className='mt-4'>
 					<p>each picture must not exceed 5 Mb</p>
 					<p>Supported formats are *jpg and *png</p>

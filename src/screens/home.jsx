@@ -108,14 +108,14 @@ export default function Home() {
 
 							<div className='mt-[20px] grid grid-cols-3 gap-4 space-x-2 space-y-4 items-center justify-center'>
 								{products?.map((items, value) => (
-									<Link to={`product/${items.id}`}>
+									<Link to={`/product/${items.id}`}>
 										<div
 											key={value}
 											className='flex flex-col w-[268px] bg-white p-[7.5px] rounded-t-xl'>
 											<div className='flex flex-row justify-center'>
 												<img
 													src={`http://localhost:5173/uploads/${items.filename}`}
-													// className='rounded-full h-44 w-44'
+													className='h-80 w-80'
 												/>
 											</div>
 											<div className='flex flex-col text-left mt-[20px] leading-[27px] font-[700] text-[20px]'>

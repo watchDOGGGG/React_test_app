@@ -27,7 +27,7 @@ function App() {
 					element={<Auth />}
 				/> */}
 				<Route
-					path='adminlogin'
+					path='/adminlogin'
 					element={<AdminLogin />}
 				/>
 				<Route
@@ -39,7 +39,7 @@ function App() {
 					element={<Dashboard />}
 				/>
 				<Route
-					path='home'
+					path='/home'
 					element={<Home />}
 				/>
 				<Route

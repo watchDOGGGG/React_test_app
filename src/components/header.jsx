@@ -35,7 +35,7 @@ export default function Header() {
 			<div className='flex flex-col justify-center h-full'>
 				<div className='flex flex-row justify-around w-full'>
 					<div className='w-[10%]'>
-						<Link to='/dashboard'>
+						<Link to='/'>
 							<img
 								src={image6}
 								className=' w-[85px] h-[35px]'
@@ -96,13 +96,15 @@ export default function Header() {
 								</div>
 							</Link>
 						) : (
-							<div>
-								<img
-									src={avater}
-									alt={avater}
-									className='h-8 w-8'
-								/>
-							</div>
+							<Link to='/createAccount'>
+								<div>
+									<img
+										src={avater}
+										alt={avater}
+										className='h-8 w-8'
+									/>
+								</div>
+							</Link>
 						)}
 					</div>
 				</div>

@@ -20,7 +20,7 @@ export default function Login() {
 		const finalResponse = await response.json();
 		if (finalResponse.message.includes("SUCCESS")) {
 			localStorage.setItem('user', JSON.stringify(finalResponse?.data));
-		    navigate('/dashboard');
+		    navigate('/');
 		} else {
 			setSubmitted(false);
 			setErr(finalResponse?.message);

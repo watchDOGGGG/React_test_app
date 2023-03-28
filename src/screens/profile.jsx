@@ -90,7 +90,7 @@ export default function Profile() {
 									<div className='flex flex-row justify-center'>
 										<img
 											src={`http://localhost:5173/uploads/${items.filename}`}
-											// className='rounded-full h-44 w-44'
+											className='h-80 w-80'
 										/>
 									</div>
 									<div className='flex flex-col text-left mt-[20px] leading-[27px] font-[700] text-[20px]'>

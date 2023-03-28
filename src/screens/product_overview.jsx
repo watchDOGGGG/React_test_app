@@ -110,13 +110,27 @@ export default function ProductOverview() {
 										<div className='mt-[45px] flex flex-col'>
 											<div className='bg-[#3E7857] w-[268px] h-[69.98px] leading-[29.37px] text-white text-center rounded-[30px]'>
 												<div className='flex flex-col justify-center'>
-													<span
-														onClick={() =>
-															onHandleConnectFarmer(product.farmer_id)
-														}
-														className='font-[800] text-[18px] pt-[20px]'>
-														{farmer?.phone}
-													</span>
+													{user ? (
+														<Link to={`/farmerContact/${product.farmer_id}`}>
+															<div
+																onClick={() =>
+																	onHandleConnectFarmer(product.farmer_id)
+																}
+																className='font-[800] text-[18px] pt-[20px]'>
+																{farmer?.phone}
+															</div>
+														</Link>
+													) : (
+														<Link to='/createAccount'>
+															<div
+																onClick={() =>
+																	onHandleConnectFarmer(product.farmer_id)
+																}
+																className='font-[800] text-[18px] pt-[20px]'>
+																{farmer?.phone}
+															</div>
+														</Link>
+													)}
 												</div>
 											</div>
 										</div>
@@ -124,12 +138,19 @@ export default function ProductOverview() {
 										<div className='mt-[20.2px] flex flex-col'>
 											<div className='border-2 border-black w-[268px] h-[69.98px] leading-[29.37px] text-black text-center rounded-[30px]'>
 												<div className='flex flex-col justify-center'>
-												<Link to="/connectFarmer">
-												    <span
-														className='flex items-center justify-center font-[800] text-[18px] pt-[20px] text-center'>
-														Make an Offer
-													</span>
-												</Link>	
+													{user ? (
+														<Link to={`/farmerContact/${product.farmer_id}`}>
+															<div className='flex items-center justify-center font-[800] text-[18px] pt-[20px] text-center'>
+																Make an Offer
+															</div>
+														</Link>
+													) : (
+														<Link to='/createAccount'>
+															<div className='flex items-center justify-center font-[800] text-[18px] pt-[20px] text-center'>
+																Make an Offer
+															</div>
+														</Link>
+													)}
 												</div>
 											</div>
 										</div>
@@ -179,21 +200,34 @@ export default function ProductOverview() {
 												</div>
 												<div className='mt-[20.2px] flex flex-col'>
 													<div className='bg-[#0EB770]  leading-[29.37px] text-white text-center rounded-[30px] p-2'>
-														<span
-															onClick={() =>
-																onHandleConnectFarmer(product.farmer_id)
-															}
-															className='font-[800] text-[18px]'>
-															{farmer?.phone}
-														</span>
+														{user ? (
+															<Link to={`/farmerContact/${product.farmer_id}`}>
+																<span
+																	onClick={() =>
+																		onHandleConnectFarmer(product.farmer_id)
+																	}
+																	className='font-[800] text-[18px]'>
+																	{farmer?.phone}
+																</span>
+															</Link>
+														) : (
+															<Link to='/createAccount'>
+																<span
+																	onClick={() =>
+																		onHandleConnectFarmer(product.farmer_id)
+																	}
+																	className='font-[800] text-[18px]'>
+																	{farmer?.phone}
+																</span>
+															</Link>
+														)}
 													</div>
 												</div>
 
 												<div className='mt-[20.2px] flex flex-col'>
 													<div className='border-[#0EB770] border-2  leading-[29.37px] text-[#0EB770] text-center rounded-[30px] p-2'>
 														<Link to='/connectFarmer'>
-															<span
-																className='font-[800] text-[18px]'>
+															<span className='font-[800] text-[18px]'>
 																Start Chat
 															</span>
 														</Link>

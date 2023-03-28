@@ -30,6 +30,10 @@ export const validateLogin = (values) => {
 export const validateSignUp = (values) => {
     let errors = {};
 
+    if (!values.filename) {
+        errors.filename = "File Name Required"
+    }
+
     if (!values.firstname.trim()) {
         errors.firstname = "First Name Required"
     }
