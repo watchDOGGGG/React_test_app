@@ -11,8 +11,6 @@ export default function MainCategory() {
     const { farmerId } = useParams();
     const [products, setProducts] = useState([]);
     const [farmer, setFarmer] = useState("");
-    console.log(farmer?.result);
-    console.log(products);
 
     const getFarmer = async (id) => {
         const response = await getSingleFarmer(id);
@@ -46,28 +44,26 @@ export default function MainCategory() {
 					<div className='home-section-2 flex flex-row justify-center w-full'>
 						<div className='flex flex-col w-[80%]'>
 							{products?.results?.length > 0 ? (
-								<h2 className='font-bold mt-[100px] text-3xl'>
+								<h2 className='font-bold mt-[100px] text-4xl'>
 									{`${farmer?.result?.firstname} ${farmer?.result?.lastname} Products`}
 								</h2>
 							) : (
-                                " "
+								' '
 							)}
 							<>
 								{products?.results?.length > 0 ? (
-									<div className='mt-16 p-8 grid grid-cols-3 gap-4 space-x-2 space-y-4 items-center justify-center'>
+									<div className='grid grid-cols-4 gap-16 p-24 items-center justify-center'>
 										{products?.results?.map((items, value) => (
-											<Link to={`/product/${items.id}`}>
-												<div
-													key={value}
-													className='flex flex-col w-[268px] bg-white p-[7.5px] rounded-t-xl'>
-													<div className='flex flex-row justify-center'>
-														<img
-															src={`http://localhost:5173/uploads/${items.filename}`}
-															// className='rounded-full h-44 w-44'
-														/>
-													</div>
-													<div className='flex flex-col text-left mt-[20px] leading-[27px] font-[700] text-[20px]'>
-														<h3>{`Basket of ${items.productname}`}</h3>
+											<Link
+												to={`/product/${items.id}`}
+												key={value}>
+												<div className='flex flex-col bg-white p-4 rounded-xl'>
+													<img
+														src={`http://localhost:5173/uploads/${items.filename}`}
+														className='h-64 w-full'
+													/>
+													<div className='flex flex-col text-left mt-[20px] font-[700] text-[20px]'>
+														<h3>{items.productname}</h3>
 														<span className='text-[#0EB770] text-[18px]'>
 															{`₦${items.price}`}
 														</span>

@@ -138,6 +138,19 @@ export const createProduct = async (formData) => {
     }
 };
 
+export const deleteSingleProduct = async (id) => {
+    try {
+        return await (await fetch(`${baseUrl}/deleteUser/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: null
+        }));
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 // viewfarmersproduct/:id
 // export const login = async (payload) => {

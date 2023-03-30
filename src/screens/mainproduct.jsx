@@ -31,20 +31,18 @@ export default function MainProduct() {
 					</div>
 				</div>
 				<div className='bg-[#F5F5F5]'>
-					<div className='mt-[20px] grid grid-cols-4 gap-5 space-y-4 p-16 space-x-8 items-center justify-center'>
+					<div className='mt-[20px] grid grid-cols-4 gap-16 p-24 items-center justify-center'>
 						{products?.map((items, value) => (
 							<Link
 								to={`/product/${items.id}`}
 								key={value}>
-								<div className='flex flex-col bg-white p-[7.5px] rounded-t-xl'>
-									<div className='flex flex-row justify-center'>
-										<img
-											src={`http://localhost:5173/uploads/${items.filename}`}
-											// className='rounded-full h-44 w-44'
-										/>
-									</div>
-									<div className='flex flex-col text-left mt-[20px] leading-[27px] font-[700] text-[20px]'>
-										<h3>{`Basket of ${items.productname}`}</h3>
+								<div className='flex flex-col bg-white p-4 rounded-xl'>
+									<img
+										src={`http://localhost:5173/uploads/${items.filename}`}
+										className='h-64 w-full'
+									/>
+									<div className='flex flex-col text-left mt-[20px] font-[700] text-[20px]'>
+										<h3>{items.productname}</h3>
 										<span className='text-[#0EB770] text-[18px]'>
 											{`₦${items.price}`}
 										</span>

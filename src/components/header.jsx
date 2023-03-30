@@ -3,9 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { displayfarmer_product } from '../helper/api';
 import image8 from '../assets/8.png';
 import image9 from '../assets/9.png';
-import image10 from '../assets/10.png';
+import home from '../assets/home.svg';
 import image6 from '../assets/6.png';
 import avater from '../assets/avater.svg';
+import logout from '../assets/logout.svg';
 
 export default function Header() {
     const user = JSON.parse(localStorage.getItem('user')) || [];
@@ -26,12 +27,16 @@ export default function Header() {
 	}, []);
 
 	const onHandleClick = (click) => {
-		navigate(`/category/${click}`);
+		navigate(`/product/${click}`);
 		setClick(click);
 	};
 
+	const handleLogout = () => {
+		localStorage.removeItem('user');
+	}
+
 	return (
-		<div className='relative bg-white w-[1300px] h-[100px] mt-[40px] rounded-[20px]'>
+		<div className='relative bg-white w-full pl-28 pr-28 h-[100px] mt-[40px] rounded-[20px]'>
 			<div className='flex flex-col justify-center h-full'>
 				<div className='flex flex-row justify-around w-full'>
 					<div className='w-[10%]'>
@@ -45,7 +50,7 @@ export default function Header() {
 					<div className='flex flex-col justify-around w-[50%]'>
 						<div className='flex flex-col space-y-2 w-full border p-2 font-bold border-black rounded-[28px] justify-center header-search'>
 							<input
-								className='w-[90%]'
+								className='w-[90%] p-1'
 								type='text'
 								placeholder='search...'
 								onChange={(e) => setInputText(e.target.value)}
@@ -61,13 +66,15 @@ export default function Header() {
 									)
 									.map((value, index) => (
 										<div key={index}>
-											<div
-												className='absolute p-4 bg-gray-100 hover:bg-gray-200 w-[640px]'
-												onClick={() => onHandleClick(value?.productname)}>
-												<p className='text-md font-bold'>
-													{value?.productname}
-												</p>
-											</div>
+											<Link to={`/searchResult/${value?.productname}`}>
+												<div
+													className='absolute p-4 bg-gray-100 hover:bg-gray-200 w-[640px]'
+													onClick={() => onHandleClick(value?.id)}>
+													<p className='text-md font-bold'>
+														{value?.productname}
+													</p>
+												</div>
+											</Link>
 											<hr className='border-2' />
 										</div>
 									))}
@@ -76,22 +83,20 @@ export default function Header() {
 							''
 						)}
 					</div>
-					<div className='w-[25%] flex flex-row justify-center space-x-4'>
-						<img
-							src={image10}
-							className='w-[35px] h-[35px] cursor-pointer'
-						/>
-						<img
-							src={image9}
-							className='ml-5 w-[35px] h-[35px] cursor-pointer'
-						/>
+					<div className='w-[25%] flex flex-row items-center justify-center space-x-4'>
+						<Link to='/main/product'>
+							<img
+								src={home}
+								className='w-[35px] h-[35px] cursor-pointer'
+							/>
+						</Link>
 						{user.firstname ? (
 							<Link to='/profile'>
 								<div className='flex items-center justify-center'>
 									<img
 										src={`http://localhost:5173/uploads/${user.filename}`}
 										alt={`http://localhost:5173/uploads/${user.filename}`}
-										className='w-9 h-9 rounded-full'
+										className='w-12 h-12 rounded-full'
 									/>
 								</div>
 							</Link>
@@ -106,6 +111,13 @@ export default function Header() {
 								</div>
 							</Link>
 						)}
+						<Link to='/'>
+							<img
+								src={logout}
+								className='w-[35px] h-[35px] cursor-pointer'
+								onClick={handleLogout}
+							/>
+						</Link>
 					</div>
 				</div>
 			</div>

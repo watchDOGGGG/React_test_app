@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { viewFarmerProducts } from '../helper/api';
+import { Link, useNavigate } from 'react-router-dom';
+import { viewFarmerProducts, deleteSingleProduct } from '../helper/api';
 import Header from '../components/header';
 import notification from '../assets/notification.svg';
 import chat from '../assets/chat.svg';
-import bookmark from '../assets/bookmark.svg'
+import bookmark from '../assets/bookmark.svg';
+import deleteProduct from '../assets/x.svg';
+
+
+
 
 export default function Profile() {
 	const user = JSON.parse(localStorage.getItem('user')) || [];
 	const [product, setProduct] = useState();
+	const [deleteProd, setDeleteProd] = useState();
+	const navigate = useNavigate();
+	// console.log(deleteProd);
 
 	const getFramersProduct = async (id) => {
 		const res = await viewFarmerProducts(id);
@@ -16,13 +23,29 @@ export default function Profile() {
 		setProduct(finalRes);
 	}
 
+	const deleteFarmerProduct = async (id) => {
+		const res = await deleteSingleProduct(id);
+		const finalRes = await res.json();
+		setDeleteProd(finalRes);
+	}
+
+	const handleDelete = (id) => {
+		const resMsg = confirm("Are you sure you want to delete this product?!");
+		if (resMsg === true) {
+		    deleteFarmerProduct(id);	
+		}
+	}
+
+	if (deleteProd?.message) {
+		window.location.reload('/');
+	}
 
 	useEffect(() => {
 		getFramersProduct(user.role_id);
 	}, []);
 
 	return (
-		<div>
+		<div className='flex flex-col items-center justify-center'>
 			<Header />
 			<div className='flex flex-col items-center justify-center p-6'>
 				<div className='flex items-center justify-center'>
@@ -81,34 +104,43 @@ export default function Profile() {
 				)}
 
 				{product && user.role === 'farmer' && (
-					<div className='mt-[20px] grid grid-cols-3 gap-4 space-x-2 space-y-4 items-center justify-center'>
+					<div className='mt-12 grid grid-cols-4 gap-16 items-start justify-start'>
 						{product?.results?.map((items, value) => (
-							<Link to={`/product/${items.id}`}>
-								<div
-									key={value}
-									className='flex flex-col w-[268px] bg-white p-[7.5px] rounded-t-xl'>
-									<div className='flex flex-row justify-center'>
+							<div className='bg-gray-100 rounded-xl' key={value}>
+								<div className='flex items-center justify-end'>
+									<img
+										src={deleteProduct}
+										alt={deleteProduct}
+										className='h-5 w-5 right-1'
+										onClick={() => handleDelete(items.id)}
+									/>
+								</div>
+								<Link
+									to={`/product/${items.id}`}
+									key={value}>
+									<div className='flex flex-col rounded-xl'>
 										<img
 											src={`http://localhost:5173/uploads/${items.filename}`}
-											className='h-80 w-80'
+											alt={`http://localhost:5173/uploads/${items.filename}`}
+											className='h-64 w-full'
 										/>
-									</div>
-									<div className='flex flex-col text-left mt-[20px] leading-[27px] font-[700] text-[20px]'>
-										<h3>{`Basket of ${items.productname}`}</h3>
-										<span className='text-[#0EB770] text-[18px]'>
-											{`₦${items.price}`}
-										</span>
-										<div className='flex flex-row'>
-											<span className='text-[#6F6F6F] line-through text-[16px] font-[400]'>
-												# 20,000
+										<div className='flex flex-col font-[700] p-3 text-[20px]'>
+											<h3>{items.productname}</h3>
+											<span className='text-[#0EB770] text-[18px]'>
+												{`₦${items.price}`}
 											</span>
-											<div className='text-[#CB77D9] font-[400] text-[11px] w-[29px] pl-1 text-center bg-[#CB77D9] bg-opacity-[0.1] ml-[0.6px]'>
-												<span>-50%</span>
+											<div className='flex flex-row'>
+												<span className='text-[#6F6F6F] line-through text-[16px] font-[400]'>
+													# 20,000
+												</span>
+												<div className='text-[#CB77D9] font-[400] text-[11px] w-[29px] pl-1 text-center bg-[#CB77D9] bg-opacity-[0.1] ml-[0.6px]'>
+													<span>-50%</span>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</Link>
+								</Link>
+							</div>
 						))}
 					</div>
 				)}

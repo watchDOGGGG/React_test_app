@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getSingleFarmer, displayfarmer_product } from "../helper/api";
+import { getSingleFarmer, viewFarmerProducts } from "../helper/api";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
 export default function FarmerContact() {
-	const user = JSON.parse(localStorage.getItem('user')) || [];
     const { id } = useParams();
 	const [farmer, setFarmer] = useState(null);
 	const [products, setProducts] = useState([]);
+	console.log(products)
 
     const getFarmer = async (id) => {
 		const response = await getSingleFarmer(id);
@@ -17,29 +17,29 @@ export default function FarmerContact() {
     };
 
 	const getProducts = async () => {
-		const response = await displayfarmer_product();
+		const response = await viewFarmerProducts(id);
 		const data = await response.json();
-		setProducts(data.data.usersDetails);
+		setProducts(data?.results);
 	};
     
     useEffect(() => {
         getFarmer(id);
-        getProducts();
+        getProducts(id);
     }, [id]);
 
     
     return (
-			<div>
-				<Header />
+			<div className="flex flex-col items-center justify-center">
+			<Header />
 				{farmer && products.length > 0 ? (
 					<>
-						<div className='flex flex-row items-center justify-center p-12 '>
+						<div className='flex flex-row bg-gray-100 items-center justify-center p-16 '>
 							<div className='w-1/4 p-1'>
 								<div className='flex flex-col items-center justify-center '>
 									<div className='flex items-center justify-center'>
 										<img
-											src={`http://localhost:5173/uploads/${user.filename}`}
-											alt={`http://localhost:5173/uploads/${user.filename}`}
+											src={`http://localhost:5173/uploads/${farmer.filename}`}
+											alt={`http://localhost:5173/uploads/${farmer.filename}`}
 											className='w-44 h-44 rounded-full'
 										/>
 									</div>
@@ -90,21 +90,19 @@ export default function FarmerContact() {
 									</div>
 								</div>
 							</div>
-							<div className='w-3/4 p-1'>
-								<div className='mt-[20px] grid grid-cols-3 gap-5 space-y-4 space-x-8 items-center justify-center'>
+							<div className='w-3/4'>
+								<div className='mt-[20px] grid grid-cols-4 gap-16 m-5 items-center justify-center'>
 									{products?.map((items, value) => (
 										<Link
 											to={`/product/${items.id}`}
 											key={value}>
-											<div className='flex flex-col bg-white p-[7.5px] rounded-t-xl'>
-												<div className='flex flex-row justify-center'>
-													<img
-														src={`http://localhost:5173/uploads/${items.filename}`}
-														className='h-80 w-80'
-													/>
-												</div>
-												<div className='flex flex-col text-left mt-[20px] leading-[27px] font-[700] text-[20px]'>
-													<h3>{`Basket of ${items.productname}`}</h3>
+											<div className='flex flex-col bg-white p-4 rounded-xl'>
+												<img
+													src={`http://localhost:5173/uploads/${items.filename}`}
+													className='h-64 w-full'
+												/>
+												<div className='flex flex-col mt-[20px] font-[700] text-[20px]'>
+													<h3>{items.productname}</h3>
 													<span className='text-[#0EB770] text-[18px]'>
 														{`₦${items.price}`}
 													</span>

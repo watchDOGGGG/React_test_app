@@ -20,7 +20,7 @@ export default function Login() {
 			const response = await adminlogin(values);
 			const finalResponse = await response.json();
 			if (finalResponse?.message.includes("successful")) {
-				navigate('/dashboard');
+				navigate('/');
 			} else {
 				setSubmitted(false);
 				setErr(finalResponse?.message);

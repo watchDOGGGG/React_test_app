@@ -40,8 +40,8 @@ export default function UploadScreen() {
 			<div className='flex flex-col items-center justify-center text-center'>
 				<h1 className='text-6xl font-bold mt-10'>Uploading Document</h1>
 				<div className='text-green-500 text-sm font-bold mt-5'>
-					<h2>Please we will love you to upload the following</h2>
-					<h2>document to show your legitimatcy</h2>
+					<h2>Please we will love you to upload one of the following</h2>
+					<h2>document to show your legitimacy</h2>
 				</div>
 				<div className='shadow-lg bg-white p-12 mt-10'>
 					<p className='font-bold'>Upload</p>

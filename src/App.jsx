@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import Auth from './screens/auth';
 import Home from "./screens/home";
@@ -13,6 +14,7 @@ import CreateProduct from "./screens/createProduct";
 import CreateAccount from "./screens/createAccount";
 import ConnectFarmer from './screens/connection';
 import FarmerContact from "./screens/farmerContact";
+import SearchResult from "./screens/searchResult";
 
 function App() {
   return (
@@ -77,6 +79,10 @@ function App() {
 				<Route
 					path='/farmerContact/:id'
 					element={<FarmerContact />}
+				/>
+				<Route
+					path='/searchResult/:items'
+					element={<SearchResult />}
 				/>
 			</Routes>
 		</BrowserRouter>

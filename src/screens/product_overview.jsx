@@ -17,14 +17,16 @@ export default function ProductOverview() {
 	const [product, setProduct] = useState(null);
 	const [products, setProducts] = useState([]);
 	const [farmer, setFarmer] = useState(null);
+	const [check, setCheck] = useState(false);
 
 	const getProduct = async (id) => {
 		const response = await viewSingleProduct(id);
 		const data = await response.json();
 		setProduct(Object.assign({}, ...data?.results));
+		if (user.role === 'farmer'){
+			setCheck(true);
+		}
 	};
-
-	console.log(farmer);
 
 	const getProducts = async () => {
 		const response = await displayfarmer_product();
@@ -39,12 +41,11 @@ export default function ProductOverview() {
 	};
 
 	const onHandleConnectFarmer = (id) => {
-		if (user) {
+		if (user?.role === 'customer') {
 			navigate(`/farmerContact/${id}`);
 		} else {
-			navigate('/createAccount');
+			navigate('/createAccount')
 		}
-		
 	};
 
 	useEffect(() => {
@@ -83,74 +84,65 @@ export default function ProductOverview() {
 										<div className='font-[800] text-[69px]'>
 											<span>{product.productname}</span>
 										</div>
-										<div className='flex flex-row'>
+										<div className='flex flex-row space-x-16 text-2xl text-bold'>
 											<span>Promoted</span>
-											<span className='ml-5'>Posted 3 hours</span>
-											<span className='ml-5'>Lagos, Ikeja</span>
+											<span>Posted 3 hours</span>
+											<span>Lagos, Ikeja</span>
 										</div>
 
-										<div className='flex flex-row mt-[109px]'>
-											<div className='flex flex-col font-bold text-sm'>
-												<span>EGG</span>
-												<span>TYPE</span>
+										<div className='flex flex-row mt-[109px] space-x-44'>
+											<div className='flex flex-col text-xl'>
+											<span>{`Title: ${product?.productname}`}</span>
+											<span>{`Type: ${product?.type}`}</span>
 											</div>
 
-											<div className='flex flex-col font-bold text-sm ml-[159px]'>
-												<span>15</span>
-												<span>QUANTITY</span>
+											<div className='flex flex-row items-center justify-center space-x-2 text-xl'>
+												<span>Quantity :</span>
+											    <span>{product?.quantity}</span>
 											</div>
 										</div>
 
 										<div className='mt-[42px]'>
-											<span>
-												Giant broiler Eggs , Heavy and affordable 1 chicken 7500
-											</span>
+											<p className='font-bold'>
+												{product?.description}
+											</p>
 										</div>
 
 										<div className='mt-[45px] flex flex-col'>
-											<div className='bg-[#3E7857] w-[268px] h-[69.98px] leading-[29.37px] text-white text-center rounded-[30px]'>
-												<div className='flex flex-col justify-center'>
-													{user ? (
-														<Link to={`/farmerContact/${product.farmer_id}`}>
-															<div
-																onClick={() =>
-																	onHandleConnectFarmer(product.farmer_id)
-																}
-																className='font-[800] text-[18px] pt-[20px]'>
-																{farmer?.phone}
-															</div>
-														</Link>
-													) : (
-														<Link to='/createAccount'>
-															<div
-																onClick={() =>
-																	onHandleConnectFarmer(product.farmer_id)
-																}
-																className='font-[800] text-[18px] pt-[20px]'>
-																{farmer?.phone}
-															</div>
-														</Link>
-													)}
-												</div>
-											</div>
+											{user?.role ? (
+												<button
+													onClick={() =>
+														onHandleConnectFarmer(product.farmer_id)
+													}
+													disabled={check}
+													className={`bg-[#3E7857] w-[268px] h-[69.98px] leading-[29.37px] text-white text-center rounded-[30px]`}>
+													<div className='flex flex-col justify-center'>
+														<div className='font-[800] text-[18px]'>
+															{farmer?.phone}
+														</div>
+													</div>
+												</button>
+											) : (
+												<button
+													onClick={() =>
+														onHandleConnectFarmer(product.farmer_id)
+													}
+													className='bg-[#3E7857] w-[268px] h-[69.98px] leading-[29.37px] text-white text-center rounded-[30px]'>
+													<div className='flex flex-col justify-center'>
+														<div className='font-[800] text-[18px]'>
+															Show Contact
+														</div>
+													</div>
+												</button>
+											)}
 										</div>
 
 										<div className='mt-[20.2px] flex flex-col'>
 											<div className='border-2 border-black w-[268px] h-[69.98px] leading-[29.37px] text-black text-center rounded-[30px]'>
 												<div className='flex flex-col justify-center'>
-													{user ? (
-														<Link to={`/farmerContact/${product.farmer_id}`}>
-															<div className='flex items-center justify-center font-[800] text-[18px] pt-[20px] text-center'>
-																Make an Offer
-															</div>
-														</Link>
-													) : (
-														<Link to='/createAccount'>
-															<div className='flex items-center justify-center font-[800] text-[18px] pt-[20px] text-center'>
-																Make an Offer
-															</div>
-														</Link>
-													)}
+													<div className='flex items-center justify-center font-[800] text-[18px] pt-[20px] text-center'>
+														Make an Offer
+													</div>
 												</div>
 											</div>
 										</div>
@@ -170,11 +162,9 @@ export default function ProductOverview() {
 												</div>
 												<div className='mt-[20.2px] flex flex-col'>
 													<div className='bg-[#0EB770]  leading-[29.37px] text-white text-center rounded-[30px] p-2'>
-														<Link to='/connectFarmer'>
-															<span className='font-[800] text-[18px]'>
-																Request Call Back
-															</span>
-														</Link>
+														<span className='font-[800] text-[18px]'>
+															Request Call Back
+														</span>
 													</div>
 												</div>
 											</div>
@@ -184,7 +174,10 @@ export default function ProductOverview() {
 											<div>
 												<div className='flex flex-row'>
 													<div className='mr-[13.62px]'>
-														<img src={image23} />
+														<img
+															src={`http://localhost:5173/uploads/${farmer?.filename}`}
+															className='w-12 h-12 rounded-full'
+														/>
 													</div>
 													<div className='flex flex-col'>
 														<span className='font-[600] text-[16px]'>
@@ -199,38 +192,35 @@ export default function ProductOverview() {
 													</div>
 												</div>
 												<div className='mt-[20.2px] flex flex-col'>
-													<div className='bg-[#0EB770]  leading-[29.37px] text-white text-center rounded-[30px] p-2'>
-														{user ? (
-															<Link to={`/farmerContact/${product.farmer_id}`}>
-																<span
-																	onClick={() =>
-																		onHandleConnectFarmer(product.farmer_id)
-																	}
-																	className='font-[800] text-[18px]'>
-																	{farmer?.phone}
-																</span>
-															</Link>
-														) : (
-															<Link to='/createAccount'>
-																<span
-																	onClick={() =>
-																		onHandleConnectFarmer(product.farmer_id)
-																	}
-																	className='font-[800] text-[18px]'>
-																	{farmer?.phone}
-																</span>
-															</Link>
-														)}
-													</div>
+													{user?.role ? (
+														<button
+															disabled={check}
+															onClick={() =>
+																onHandleConnectFarmer(product.farmer_id)
+															}
+															className={`bg-[#0EB770] leading-[29.37px] text-white text-center rounded-[30px] p-2`}>
+															<span className={`font-[800] text-[18px]`}>
+																{farmer?.phone}
+															</span>
+														</button>
+													) : (
+														<div
+															onClick={() =>
+																onHandleConnectFarmer(product.farmer_id)
+															}
+															className={` bg-[#0EB770]  leading-[29.37px] text-white text-center rounded-[30px] p-2`}>
+															<span className='font-[800] text-[18px]'>
+																Show Contact
+															</span>
+														</div>
+													)}
 												</div>
 
 												<div className='mt-[20.2px] flex flex-col'>
 													<div className='border-[#0EB770] border-2  leading-[29.37px] text-[#0EB770] text-center rounded-[30px] p-2'>
-														<Link to='/connectFarmer'>
-															<span className='font-[800] text-[18px]'>
-																Start Chat
-															</span>
-														</Link>
+														<span className='font-[800] text-[18px]'>
+															Start Chat
+														</span>
 													</div>
 												</div>
 											</div>
@@ -257,37 +247,38 @@ export default function ProductOverview() {
 							</div>
 							<div className='home-section-4 flex flex-row justify-center w-full mb-[256px]'>
 								<div className='flex flex-col w-[80%]'>
-									<h2 className='font-bold mt-[100px] text-xl'>Daily Deals</h2>
+									<h2 className='font-bold mt-[100px] text-6xl'>Daily Deals</h2>
 
-									<div className='mt-[20px] grid grid-cols-4 gap-5 space-y-4 space-x-8 items-center justify-center'>
-										{products?.map((items, value) => (
-											<Link
-												to={`/product/${items.id}`}
-												key={value}>
-												<div className='flex flex-col bg-white p-[7.5px] rounded-t-xl'>
-													<div className='flex flex-row justify-center'>
+									<div className='grid grid-cols-4 gap-16 p-24 items-center justify-center'>
+										{products
+											?.slice(0, 4)
+											.reverse()
+											.map((items, value) => (
+												<Link
+													to={`/product/${items.id}`}
+													key={value}>
+													<div className='flex flex-col bg-white p-4 rounded-xl'>
 														<img
 															src={`http://localhost:5173/uploads/${items.filename}`}
-															// className='rounded-full h-44 w-44'
+															className='h-64 w-full'
 														/>
-													</div>
-													<div className='flex flex-col text-left mt-[20px] leading-[27px] font-[700] text-[20px]'>
-														<h3>{`Basket of ${items.productname}`}</h3>
-														<span className='text-[#0EB770] text-[18px]'>
-															{`₦${items.price}`}
-														</span>
-														<div className='flex flex-row'>
-															<span className='text-[#6F6F6F] line-through text-[16px] font-[400]'>
-																# 20,000
+														<div className='flex flex-col text-left mt-[20px] font-[700] text-[20px]'>
+															<h3>{items.productname}</h3>
+															<span className='text-[#0EB770] text-[18px]'>
+																{`₦${items.price}`}
 															</span>
-															<div className='text-[#CB77D9] font-[400] text-[11px] w-[29px] pl-1 text-center bg-[#CB77D9] bg-opacity-[0.1] ml-[0.6px]'>
-																<span>-50%</span>
+															<div className='flex flex-row'>
+																<span className='text-[#6F6F6F] line-through text-[16px] font-[400]'>
+																	# 20,000
+																</span>
+																<div className='text-[#CB77D9] font-[400] text-[11px] w-[29px] pl-1 text-center bg-[#CB77D9] bg-opacity-[0.1] ml-[0.6px]'>
+																	<span>-50%</span>
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-											</Link>
-										))}
+												</Link>
+											))}
 									</div>
 								</div>
 							</div>

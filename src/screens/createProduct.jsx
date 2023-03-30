@@ -11,29 +11,49 @@ export default function UploadScreen() {
 	const [price, setPrice] = useState("");
 	const [error, setError] = useState("");
 	const [title, setTitle] = useState("");
+	const [type, setType] = useState("");
+	const [quantity, setQuantity] = useState("");
+	const [description, setDescription] = useState("");
+
 	const navigate = useNavigate();
 
 	const handleSubmitForm = async (event) => {
 		event.preventDefault();
 
+		const value = {
+			fileName,
+			price,
+			type,
+			quantity,
+			description,
+			title,
+		}
+		console.log(value);
+
 		const formData = new FormData();
 		formData.append('file', fileName);
 		formData.append('price', price);
+		formData.append('type', type);
+		formData.append('quantity', quantity);
+		formData.append('description', description);
 		formData.append('productname', title);
 		formData.append('farmer_id', user.role ? user.role_id : '');
 
-		if (fileName.name && price && title) {
+		if (fileName.name && price && title  && type && quantity && description) {
 			const response = await createProduct(formData);
 	        await response.json();	
 			setRes("Product successfully created*");
 			setPrice("");
 			setTitle("");
 			setFileName("");
+			setType("");
+			setQuantity("");
+			setDescription("");
 			setTimeout(() => {
 				setRes(""), navigate('/profile')
 			}, 3000);
 		} else {
-			setRes("Please fill in all the required field (add image icon, title & price)*");
+			setRes("Please fill in all the required field (add image photo, title, price, type, quantity and description)*");
 			setTimeout(() => {
 				setRes("")
 			}, 5000);
@@ -59,10 +79,10 @@ export default function UploadScreen() {
 	};
 
 	return (
-		<div className='pl-12 pr-12'>
+		<div className='flex flex-col items-center justify-center'>
 			<Header />
 			<form
-				className='p-7 mt-12'
+				className='pl-32 pr-32 mt-5 w-full'
 				method='POST'
 				action='http://localhost:5173/uploadfarmer_prod'
 				encType='multipart/form-data'>
@@ -70,62 +90,13 @@ export default function UploadScreen() {
 					<p className='text-white font-extrabold text-2xl'>Product Details</p>
 				</div>
 
-				<div className='flex flex-row items-center justify-between mt-10'>
-					<div className='space-y-3 w-1/2 pr-10'>
-						<p>Category</p>
-						<input
-							type='text'
-							disabled
-							className='h-16 w-full border-2 rounded-2xl p-1'
-						/>
-					</div>
-					<div className='space-y-3 w-1/2 pl-10'>
-						<p>Select Product</p>
-						<input
-							disabled
-							type='text'
-							className='h-16 w-full border-2 rounded-2xl p-1'
-						/>
-					</div>
-				</div>
-				<div className='mt-10'>
-					<p className='text-2xl font-bold'>Add Photo</p>
-					<p>Add at least 1 photo for this category</p>
-					<p>
-						First picture - Is the title picture. You can change the order by
-						just drag and drop
-					</p>
-				</div>
-				<div>
-					<input
-						type='file'
-						id='fileInput'
-						name='file'
-						style={{ display: 'none' }}
-						onChange={handleFileUpload}
-					/>
-					<label
-						htmlFor='fileInput'
-						className='flex items-center mt-8 text-ceneter p-2 h-16 w-16 border-black rounded-full border-2'>
-						<img
-							src={add}
-							alt={add}
-							className='h-12 w-12'
-						/>
-					</label>
-				</div>
-				{fileName ? <div className='mt-2'>{fileName.name}</div> : ''}
-				{error && <p className='text-red-600 text-sm font-bold mt-2'>{error}</p>}
-				<div className='mt-4'>
-					<p>each picture must not exceed 5 Mb</p>
-					<p>Supported formats are *jpg and *png</p>
-				</div>
 				<div className='space-y-10'>
 					<div className='flex flex-row items-center justify-between mt-6'>
 						<div className='space-y-3 w-1/2 pr-16'>
 							<p>Title</p>
 							<input
 								type='text'
+								placeholder='Title'
 								className='h-16 w-full border-2 rounded-2xl p-1'
 								value={title}
 								onChange={(e) => setTitle(e.target.value)}
@@ -136,7 +107,9 @@ export default function UploadScreen() {
 							<input
 								type='text'
 								className='h-16 w-full border-2 rounded-2xl p-1'
-								disabled
+								placeholder='Type'
+								value={type}
+								onChange={(e) => setType(e.target.value)}
 							/>
 						</div>
 					</div>
@@ -144,18 +117,67 @@ export default function UploadScreen() {
 						<p>Description</p>
 						<input
 							type='text'
-							className='h-44 w-full border-2 rounded-2xl p-1'
-							disabled
+							className='flex text-start h-44 w-full border-2 rounded-2xl p-1'
+							placeholder='Description'
+							value={description}
+							onChange={(e) => setDescription(e.target.value)}
 						/>
 					</div>
-					<div className='space-y-3 w-1/2 pr-10'>
-						<p>Price</p>
+					<div className='flex flex-row items-center justify-between mt-6'>
+						<div className='space-y-3 w-1/2 pr-10'>
+							<p>Quantity</p>
+							<input
+								placeholder='Quantity'
+								type='text'
+								className='h-16 w-full border-2 rounded-2xl p-1'
+								value={quantity}
+								onChange={(e) => setQuantity(e.target.value)}
+							/>
+						</div>
+						<div className='space-y-3 w-1/2 pl-10'>
+							<p>Price</p>
+							<input
+								type='text'
+								placeholder='₦ 00.00'
+								className='h-16 w-full border-2 rounded-2xl p-1'
+								value={price}
+								onChange={(e) => setPrice(e.target.value)}
+							/>
+					    </div>
+					</div>
+					<div className='mt-10'>
+						<p className='text-2xl font-bold'>Add Photo</p>
+						<p>Add at least 1 photo for this category</p>
+						<p>
+							First picture - Is the title picture. You can change the order by
+							just drag and drop
+						</p>
+					</div>
+					<div>
 						<input
-							type='text'
-							className='h-16 w-full border-2 rounded-2xl p-1'
-							value={price}
-							onChange={(e) => setPrice(e.target.value)}
+							type='file'
+							id='fileInput'
+							name='file'
+							style={{ display: 'none' }}
+							onChange={handleFileUpload}
 						/>
+						<label
+							htmlFor='fileInput'
+							className='flex items-center mt-8 text-ceneter p-2 h-16 w-16 border-black rounded-full border-2'>
+							<img
+								src={add}
+								alt={add}
+								className='h-12 w-12'
+							/>
+						</label>
+					</div>
+					{fileName ? <div className='mt-2'>{fileName.name}</div> : ''}
+					{error && (
+						<p className='text-red-600 text-sm font-bold mt-2'>{error}</p>
+					)}
+					<div className='mt-4'>
+						<p>each picture must not exceed 5 Mb</p>
+						<p>Supported formats are *jpg and *png</p>
 					</div>
 				</div>
 

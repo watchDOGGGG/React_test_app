@@ -20,10 +20,10 @@ export default function Login() {
 		const finalResponse = await response.json();
 		if (finalResponse.message.includes("SUCCESS")) {
 			localStorage.setItem('user', JSON.stringify(finalResponse?.data));
-		    navigate('/');
+		    navigate('/profile');
 		} else {
 			setSubmitted(false);
-			setErr(finalResponse?.message);
+			setErr('Incorrect Email or Password');
 			setTimeout(() => {
 				setErr('');
 			}, 7000);
