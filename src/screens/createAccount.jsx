@@ -74,8 +74,6 @@ export default function CreateAccount() {
 
 	const handleFileUpload = (event) => {
 		const file = event.target.files[0];
-		console.log(file);
-
 		const fileNameParts = file.name.split('.');
 		const fileExtension = fileNameParts[fileNameParts.length - 1].toLowerCase();
 

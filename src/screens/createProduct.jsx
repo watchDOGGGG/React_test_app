@@ -20,16 +20,6 @@ export default function UploadScreen() {
 	const handleSubmitForm = async (event) => {
 		event.preventDefault();
 
-		const value = {
-			fileName,
-			price,
-			type,
-			quantity,
-			description,
-			title,
-		}
-		console.log(value);
-
 		const formData = new FormData();
 		formData.append('file', fileName);
 		formData.append('price', price);

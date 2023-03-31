@@ -114,7 +114,7 @@ export default function Dashboard() {
 						<div className='flex flex-col items-center justify-center'>
 							<h2 className='flex flex-row text-center text-[59px] font-[800] leading-[72px]'>
 								Helping you get the{' '}
-								<span className='text-[#0EB770]'>Perfect</span> Market
+								<span className='text-[#0EB770]'> Perfect </span> Market
 							</h2>
 							<p className='text-[#25313C] mt-5'>
 								connecting you with millions of customers in Nigeria and around

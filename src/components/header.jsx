@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { displayfarmer_product } from '../helper/api';
-import image8 from '../assets/8.png';
-import image9 from '../assets/9.png';
 import home from '../assets/home.svg';
 import image6 from '../assets/6.png';
 import avater from '../assets/avater.svg';
@@ -32,7 +30,11 @@ export default function Header() {
 	};
 
 	const handleLogout = () => {
-		localStorage.removeItem('user');
+		if (user.firstname) {
+			localStorage.removeItem('user');
+			navigate("/");
+		}
+		
 	}
 
 	return (
@@ -111,13 +113,12 @@ export default function Header() {
 								</div>
 							</Link>
 						)}
-						<Link to='/'>
+					
 							<img
 								src={logout}
 								className='w-[35px] h-[35px] cursor-pointer'
 								onClick={handleLogout}
 							/>
-						</Link>
 					</div>
 				</div>
 			</div>
