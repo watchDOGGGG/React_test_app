@@ -16,10 +16,8 @@ export default function UploadScreen() {
 	const [description, setDescription] = useState("");
 
 	const navigate = useNavigate();
-
 	const handleSubmitForm = async (event) => {
 		event.preventDefault();
-
 		const formData = new FormData();
 		formData.append('file', fileName);
 		formData.append('price', price);

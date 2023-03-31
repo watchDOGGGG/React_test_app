@@ -92,20 +92,18 @@ export default function ProductOverview() {
 
 										<div className='flex flex-row mt-[109px] space-x-44'>
 											<div className='flex flex-col text-xl'>
-											<span>{`Title: ${product?.productname}`}</span>
-											<span>{`Type: ${product?.type}`}</span>
+												<span>{`Title: ${product?.productname}`}</span>
+												<span>{`Type: ${product?.type}`}</span>
 											</div>
 
 											<div className='flex flex-row items-center justify-center space-x-2 text-xl'>
 												<span>Quantity :</span>
-											    <span>{product?.quantity}</span>
+												<span>{product?.quantity}</span>
 											</div>
 										</div>
 
 										<div className='mt-[42px]'>
-											<p className='font-bold'>
-												{product?.description}
-											</p>
+											<p className='font-bold'>{product?.description}</p>
 										</div>
 
 										<div className='mt-[45px] flex flex-col'>
@@ -174,10 +172,22 @@ export default function ProductOverview() {
 											<div>
 												<div className='flex flex-row'>
 													<div className='mr-[13.62px]'>
-														<img
-															src={`http://localhost:5173/uploads/${farmer?.filename}`}
-															className='w-12 h-12 rounded-full'
-														/>
+														{user?.role ? (
+															<button
+																onClick={() =>
+																	onHandleConnectFarmer(product.farmer_id)
+																}>
+																<img
+																	src={`http://localhost:5173/uploads/${farmer?.filename}`}
+																	className='w-12 h-12 rounded-full'
+																/>
+															</button>
+														) : (
+															<img
+																src={`http://localhost:5173/uploads/${farmer?.filename}`}
+																className='w-12 h-12 rounded-full'
+															/>
+														)}
 													</div>
 													<div className='flex flex-col'>
 														<span className='font-[600] text-[16px]'>
