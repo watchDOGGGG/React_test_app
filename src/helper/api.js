@@ -1,5 +1,4 @@
 const baseUrl = "http://localhost:5173";
-import axios from 'axios';
 
 export const login = async (payload) => {
     try {

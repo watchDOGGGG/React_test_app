@@ -23,7 +23,7 @@ export default function ProductOverview() {
 		const response = await viewSingleProduct(id);
 		const data = await response.json();
 		setProduct(Object.assign({}, ...data?.results));
-		if (user.role === 'farmer'){
+		if (user?.role === 'farmer'){
 			setCheck(true);
 		}
 	};
